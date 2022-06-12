@@ -1,0 +1,65 @@
+name: Create Release
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  release:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.16'
+      - name: Build
+        env:
+          REF: ${{ github.ref }}
+        run: |
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w -X github.com/ass-a-service/mighty-redis-pubsub-to-queue-extractor" -o build/redis_queue_extractor_linux_amd64 -v main.go
+          CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags="-s -w -X github.com/ass-a-service/mighty-redis-pubsub-to-queue-extractor" -o build/redis_queue_extractor_linux_arm64 -v main.go
+      - name: Compress binary and make it executable
+        run: |
+          upx build/redis_queue_extractor_linux_amd64 && chmod +x build/redis_queue_extractor_linux_amd64
+          upx build/redis_queue_extractor_linux_arm64 && chmod +x build/redis_queue_extractor_linux_arm64
+      - name: Create checksum
+        run: |
+          SUM=`cd build && sha256sum redis_queue_extractor_linux_amd64`
+          SUM2=`cd build && sha256sum redis_queue_extractor_linux_arm64`
+          echo -e "$SUM\n$SUM2" > checksums.txt
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: true
+      - name: Upload amd64 Binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/redis_queue_extractor_linux_amd64
+          asset_name: redis_queue_extractor_linux_amd64
+          asset_content_type: application/octet-stream
+      - name: Upload arm64 Binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/redis_queue_extractor_linux_arm64
+          asset_name: redis_queue_extractor_linux_arm64
+          asset_content_type: application/octet-stream
+      - name: Upload checksum
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./checksums.txt
+          asset_name: checksums.txt
+          asset_content_type: text/plain
