@@ -31,11 +31,18 @@ func PubSub2Queue() {
 
 	redis_channel_name := GetEnvOrFail("REDIS_CHANNEL")
 	redis_queue_name := GetEnvOrFail("REDIS_QUEUE")
+	queue_type := GetEnvOrFail("QUEUE_TYPE")
 	pubsub := rdb.Subscribe(ctx, redis_channel_name)
 	ch := pubsub.Channel()
 	fmt.Fprintln(os.Stdout, "Subscribed to channel: "+redis_channel_name)
 	for msg := range ch {
-		rdb.RPush(ctx, redis_queue_name, msg.Payload)
+		if queue_type == "FIFO" {
+			rdb.RPush(ctx, redis_queue_name, msg.Payload)
+		} else if queue_type == "LIFO" {
+			rdb.LPush(ctx, redis_queue_name, msg.Payload)
+		} else {
+			log.Fatalln("Unknown queue type: " + queue_type + ". Make sure it is either FIFO or LIFO.")
+		}
 		if os.Getenv("DEBUG") == "1" {
 			fmt.Println(msg.Channel, msg.Payload)
 		}
