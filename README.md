@@ -1,6 +1,6 @@
-# Simple Redis Pub/Sub to Queue extractor
+# Mighty Redis Pub/Sub to Queue extractor
 
-SRPSTQE doesn't really sound like a name our marketing department
+MRPSTQE doesn't really sound like a name our marketing department
 could use, so please if you can think of a cool name let us know.
 
 ## Purpose

@@ -1,4 +1,4 @@
-module github.com/ass-a-service/ajobot-queue
+module github.com/ass-a-service/mighty-redis-pubsub-to-queue-extractor
 
 go 1.16
 
