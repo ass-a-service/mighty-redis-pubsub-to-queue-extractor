@@ -20,4 +20,4 @@ FROM gcr.io/distroless/static:latest
 COPY --from=builder /etc/os-release /etc/os-release
 
 COPY --from=builder /app/redis_queue_extractor /usr/bin/
-CMD [ "/usr/bin/redis_queue_extractor", "start" ]
+CMD [ "/usr/bin/redis_queue_extractor" ]

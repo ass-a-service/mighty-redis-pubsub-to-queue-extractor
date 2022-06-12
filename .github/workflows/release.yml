@@ -16,8 +16,8 @@ jobs:
         env:
           REF: ${{ github.ref }}
         run: |
-          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w -X github.com/ass-a-service/mighty-redis-pubsub-to-queue-extractor" -o build/redis_queue_extractor_linux_amd64 -v main.go
-          CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags="-s -w -X github.com/ass-a-service/mighty-redis-pubsub-to-queue-extractor" -o build/redis_queue_extractor_linux_arm64 -v main.go
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o build/redis_queue_extractor_linux_amd64 -v main.go
+          CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o build/redis_queue_extractor_linux_arm64 -v main.go
       - name: Compress binary and make it executable
         run: |
           upx build/redis_queue_extractor_linux_amd64 && chmod +x build/redis_queue_extractor_linux_amd64
