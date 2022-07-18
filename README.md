@@ -1,7 +1,7 @@
 # Mighty Redis Pub/Sub to Queue extractor
 
 MRPSTQE doesn't really sound like a name our marketing department
-could use, so please if you can think of a cool name let us know.z
+could use, so please if you can think of a cool name let us know.
 
 ## Purpose
 
