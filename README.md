@@ -1,12 +1,15 @@
 # Mighty Redis Pub/Sub to Queue extractor
 
 MRPSTQE doesn't really sound like a name our marketing department
-could use, so please if you can think of a cool name let us know.
+could use, so please if you can think of a cool name let us know.z
 
 ## Purpose
 
 A simple yet mighty Redis Pub/sub to Queue extractor written in Go.
 It's meant to [Web Scale](https://www.youtube.com/watch?v=b2F-DItXtZs).
+
+[![](https://mermaid.ink/img/pako:eNo1jk0OgjAQRq_SzEoTuEAXJhBJXGCCraysi4aO2mhbUsrCAHe3VZzVl3lvfibonEKgcPeyf5CaCStCcWGo9HAleb6bm7acSbk5soafT9U28fILeAKFsCTWr1M3LT8Q5wlLYSbVukdYyMCgN1KreGpKMwLCAw0KoDEq6Z8ChF2iN_ZKBqyUDs4DvcnXgBnIMTj-th3Q4Ef8S3st49tmtZYPmaFCQg)](https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNo1jk0OgjAQRq_SzEoTuEAXJhBJXGCCraysi4aO2mhbUsrCAHe3VZzVl3lvfibonEKgcPeyf5CaCStCcWGo9HAleb6bm7acSbk5soafT9U28fILeAKFsCTWr1M3LT8Q5wlLYSbVukdYyMCgN1KreGpKMwLCAw0KoDEq6Z8ChF2iN_ZKBqyUDs4DvcnXgBnIMTj-th3Q4Ef8S3st49tmtZYPmaFCQg)
+
 
 ## Usage
 
